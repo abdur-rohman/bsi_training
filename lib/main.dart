@@ -153,10 +153,12 @@ class SORadioButton extends StatelessWidget {
         Row(
           children: options
               .map(
-                (value) => Radio<String>(
-                  value: value,
-                  groupValue: selectedOption,
-                  onChanged: onChanged,
+                (value) => Expanded(
+                  child: Radio<String>(
+                    value: value,
+                    groupValue: selectedOption,
+                    onChanged: onChanged,
+                  ),
                 ),
               )
               .toList(),
