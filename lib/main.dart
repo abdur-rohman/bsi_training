@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 
+import 'package:bsi_training/material_design.dart';
 import 'package:bsi_training/signature.dart';
 import 'package:bsi_training/stack.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -64,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String selectedOption = "";
 
   List<Widget> children = List.generate(
-    100,
+    1,
     (index) => Container(
       margin: EdgeInsets.only(bottom: 16),
       height: 156,
@@ -80,15 +82,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
+      appBar: AppBar(title: Text(widget.title)),
+      body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
+            const Text('You have pushed the button this many times:'),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
@@ -98,9 +96,8 @@ class _MyHomePageState extends State<MyHomePage> {
               subTitle: "Deskripsi",
               onChanged: (value) {
                 if (value != null) {
-                  setState(() {
-                    selectedOption = value;
-                  });
+                  selectedOption = value;
+                  setState(() {});
                 }
               },
               options: ["Ada", "Tidak ada"],
@@ -110,29 +107,19 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => StackWidget(),
-                  ),
+                  MaterialPageRoute(builder: (_) => StackWidget()),
                 );
               },
               child: Text("Stack"),
             ),
             children.length > 1
-                ? Expanded(
-                    child: CardSection(
-                      children: children,
-                    ),
-                  )
-                : CardSection(
-                    children: children,
-                  ),
+                ? Expanded(child: CardSection(children: children))
+                : CardSection(children: children),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
+                Navigator.push<Uint8List>(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => SignaturePage(),
-                  ),
+                  MaterialPageRoute(builder: (_) => SignaturePage()),
                 ).then((value) {
                   if (value != null) {
                     _signatureBytes = value;
@@ -142,7 +129,38 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text("Singature"),
             ),
-            if (_signatureBytes != null) Image.memory(_signatureBytes!)
+            if (_signatureBytes != null) Image.memory(_signatureBytes!),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => MaterialDesingPage()),
+                );
+              },
+              child: Text("Material design"),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                var dio = Dio();
+
+                try {
+                  var response = await dio.post(
+                    'https://phone-book-api.herokuapp.com/api/v1/signin',
+                    data: {
+                      "email": "l200140004@gmail.com",
+                      "password": "l200140004"
+                    },
+                  );
+
+                  String token = response.data['data']['token'] ?? '';
+                  print('Token: $token');
+                } catch (e, stackTrace) {
+                  print("Error: $e");
+                  print("Stack Trace: $stackTrace");
+                }
+              },
+              child: Text("Login"),
+            ),
           ],
         ),
       ),
