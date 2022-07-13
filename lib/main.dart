@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:bsi_training/signature.dart';
 import 'package:bsi_training/stack.dart';
 import 'package:flutter/material.dart';
 
@@ -72,6 +75,8 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   );
 
+  Uint8List? _signatureBytes;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,6 +126,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 : CardSection(
                     children: children,
                   ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => SignaturePage(),
+                  ),
+                ).then((value) {
+                  if (value != null) {
+                    _signatureBytes = value;
+                    setState(() {});
+                  }
+                });
+              },
+              child: Text("Singature"),
+            ),
+            if (_signatureBytes != null) Image.memory(_signatureBytes!)
           ],
         ),
       ),
