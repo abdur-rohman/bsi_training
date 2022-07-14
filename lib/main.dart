@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:bsi_training/material_design.dart';
 import 'package:bsi_training/signature.dart';
 import 'package:bsi_training/stack.dart';
+import 'package:bsi_training/state.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -158,6 +159,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   print("Error: $e");
                   print("Stack Trace: $stackTrace");
                 }
+              },
+              child: Text("Login"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => LoginPage()),
+                );
               },
               child: Text("Login"),
             ),
