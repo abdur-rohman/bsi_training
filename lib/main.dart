@@ -1,11 +1,13 @@
 import 'dart:typed_data';
 
 import 'package:bsi_training/material_design.dart';
+import 'package:bsi_training/navigator.dart';
 import 'package:bsi_training/signature.dart';
 import 'package:bsi_training/stack.dart';
 import 'package:bsi_training/state.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,6 +35,17 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      onGenerateRoute: (setting) {
+        switch (setting.name) {
+          case RegisterPage.route:
+            var arguments = setting.arguments as RegisterArguments;
+            return MaterialPageRoute(
+              builder: (_) => RegisterPage(arguments: arguments),
+            );
+          default:
+            return null;
+        }
+      },
     );
   }
 }
@@ -56,12 +69,29 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final _counterKey = "_counterKey";
+
   int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
+  @override
+  void initState() {
+    super.initState();
+
+    SharedPreferences.getInstance().then((sp) {
+      _counter = sp.getInt(_counterKey) ?? 0;
+
+      setState(() {});
     });
+  }
+
+  void _incrementCounter() {
+    _counter++;
+
+    SharedPreferences.getInstance().then((sp) {
+      sp.setInt(_counterKey, _counter);
+    });
+
+    setState(() {});
   }
 
   String selectedOption = "";
@@ -171,6 +201,20 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text("Login"),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  RegisterPage.route,
+                  arguments: RegisterArguments(
+                    isActive: false,
+                    text: "Apa kabar?",
+                    number: 1,
+                  ),
+                );
+              },
+              child: Text("Navigator"),
+            ),
           ],
         ),
       ),
@@ -181,6 +225,18 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+class RegisterArguments {
+  final String text;
+  final int number;
+  final bool isActive;
+
+  RegisterArguments({
+    required this.text,
+    required this.number,
+    required this.isActive,
+  });
 }
 
 class CardSection extends StatelessWidget {
