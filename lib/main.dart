@@ -175,6 +175,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 var dio = Dio();
 
                 try {
+                  var options = dio.options;
+                  options.headers['Authorization'] = 'Bearer token';
+                  dio.options = options;
                   var response = await dio.post(
                     'https://phone-book-api.herokuapp.com/api/v1/signin',
                     data: {
@@ -185,6 +188,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   String token = response.data['data']['token'] ?? '';
                   print('Token: $token');
+
+                  // Perlu disimpan ke sharedprefences
+                  if (token.isNotEmpty) {
+                    // Pindah ke halaman home
+
+                    print(options.headers);
+                  } else {
+                    print("token tidak valid");
+                  }
                 } catch (e, stackTrace) {
                   print("Error: $e");
                   print("Stack Trace: $stackTrace");
