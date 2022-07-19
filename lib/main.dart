@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:bsi_training/material_design.dart';
 import 'package:bsi_training/navigator.dart';
+import 'package:bsi_training/reqres.dart';
 import 'package:bsi_training/signature.dart';
 import 'package:bsi_training/stack.dart';
 import 'package:bsi_training/state.dart';
@@ -226,6 +227,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
               child: Text("Navigator"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => ReqResPage()),
+                );
+              },
+              child: Text("Fetch API"),
             ),
           ],
         ),
