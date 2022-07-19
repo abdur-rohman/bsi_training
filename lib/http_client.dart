@@ -1,4 +1,4 @@
-import 'package:bsi_training/http_interceptior.dart';
+import 'package:bsi_training/http_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
