@@ -36,6 +36,7 @@ dependencies:
   signature: 5.0.1
   dio: 4.0.6
   shared_preferences: 2.0.15
+  sqflite: 2.0.3
 
 dev_dependencies:
   flutter_test:

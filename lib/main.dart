@@ -6,6 +6,7 @@ import 'package:bsi_training/reqres.dart';
 import 'package:bsi_training/signature.dart';
 import 'package:bsi_training/stack.dart';
 import 'package:bsi_training/state.dart';
+import 'package:bsi_training/todo_page.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -236,6 +237,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
               child: Text("Fetch API"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => TodoPage()),
+                );
+              },
+              child: Text("Todo App"),
             ),
           ],
         ),
