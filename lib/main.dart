@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:bsi_training/flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:bsi_training/material_design.dart';
 import 'package:bsi_training/navigator.dart';
 import 'package:bsi_training/reqres.dart';
@@ -247,6 +248,18 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text("Todo App"),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => FlutterCleanArchitectureView(),
+                  ),
+                );
+              },
+              child: Text("Todo App"),
+            ),
+            SizedBox(height: 16)
           ],
         ),
       ),
